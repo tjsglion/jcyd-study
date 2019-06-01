@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // demo1
+    // var obj = new Proxy({}, {
+    //   get: function (target, key, receiver) {
+    //     console.log(target, key, receiver);
+    //     return Reflect.get(target, key, receiver);
+    //   },
+    //   set: function (target, key, value, receiver) {
+    //     console.log(target, key, receiver);
+    //     return Reflect.set(target, key, value, receiver);
+    //   }
+    // });
+    // obj.count = 1;
+    // ++obj.count;
+
+    // demo2
+    // var proxy = new Proxy({}, {
+    //   get: function (target, key) {
+    //     console.log(target, key);
+    //     return 35;
+    //   }
+    // });
+    // // proxy.a = 'a';
+    // // proxy.b = 'b';
+    // console.log(proxy.a);
+    // console.log(proxy.b);
+
+    // demo3
+    // var handler = {
+    //   get (target, name) {
+    //     if (name === 'prototype') return Object.prototype;
+    //     return 'hello, ' + name;
+    //   },
+    //   apply (target, thisBinding, args) {
+    //     // debugger;
+    //     console.log(target);
+    //     return args[0];
+    //   },
+    //   constructor (target, args) {
+    //     return {value: args[1]};
+    //   }
+    // }
+
+    // var proxy = new Proxy(function (x, y) {
+    //   return x + y;
+    // }, handler);
+
+    // console.log(proxy(1, 2));
+    // console.log(new proxy(1, 2));
+    // console.log(proxy.a);
+
+    // demo4
+    const person = {
+      name: 'tom',
+      age: 18
+    };
+    const proxy = new Proxy(person, {
+      get (target, key) {
+        if (key in target) {
+          return target[key];
+        } else {
+          throw new ReferenceError("property " + key + " is not exist;");
+        }
+      }
+    });
+
+    console.log(proxy.name, proxy.age);
+    proxy.sex;
+  </script>
+</body>
+</html>
